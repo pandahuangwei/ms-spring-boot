@@ -1,0 +1,31 @@
+##共用配置值
+## 激活dev文件配置
+##共用配置值
+spring:
+  profiles:
+    active: dev #dev #prod
+  messages:
+    basename: i18n/messages
+    encoding: UTF-8
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+    mode: LEGACYHTML5
+    encoding: UTF-8
+    cache: false
+
+mybatis:
+    type-aliases-package: com.ml.entity
+    mapper-locations: classpath:mapper/*/*.xml
+    configuration:
+      map-underscore-to-camel-case: true
+
+###分页支持
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
+  params: count=countSql
