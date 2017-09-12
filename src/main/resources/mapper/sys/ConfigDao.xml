@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ml.mapper.sys.ConfigDao">
+
+	<sql id="All_Column">
+		id, config_key key, config_value value, status, remark
+	</sql>
+
+	<select id="queryObject" resultType="com.ml.entity.sys.Config">
+		SELECT <include refid="All_Column"/> FROM sys_config WHERE id = #{id}
+	</select>
+	
+	<select id="queryList" parameterType="map" resultType="com.ml.entity.sys.Config">
+		SELECT <include refid="All_Column"/> FROM sys_config WHERE status = 1
+		<if test="key != null and key.trim() != ''">
+			and config_key like concat('%',#{key},'%')
+		</if>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+	<select id="queryTotal" parameterType="map" resultType="int">
+		SELECT COUNT(*) FROM sys_config WHERE status = 1
+		<if test="key != null and key.trim() != ''">
+			and `key` like concat('%',#{key},'%')
+		</if>
+	</select>
+	
+	<insert id="save" parameterType="com.ml.entity.sys.Config">
+		INSERT INTO sys_config(config_key, config_value, remark)
+			 VALUES(#{key},#{value},#{remark})
+	</insert>
+	
+	<update id="update" parameterType="com.ml.entity.sys.Config">
+		UPDATE sys_config
+		   SET config_key = #{key},
+		       config_value = #{value},
+		       remark = #{remark}
+	    WHERE id = #{id}
+	</update>
+	
+	<!-- 根据key，更新value -->
+	<update id="updateValueByKey" parameterType="map">
+		UPDATE sys_config SET config_value = #{value} WHERE config_key = #{key}
+	</update>
+	
+	<!-- 根据key，查询value -->
+	<select id="queryByKey" parameterType="string" resultType="string">
+		SELECT config_value FROM sys_config WHERE config_key = #{key}
+	</select>
+	
+	<delete id="deleteBatch" parameterType="int">
+		DELETE FROM sys_config WHERE id in
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+	
+	
+</mapper>

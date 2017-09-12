@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * @author Panda.HuangWei313.
+ * @author panda.
  * @since 2017-09-08 15:27.
  */
 public class Schedule implements Serializable {

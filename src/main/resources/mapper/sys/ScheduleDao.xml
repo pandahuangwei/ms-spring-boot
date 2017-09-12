@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ml.mapper.sys.ScheduleDao">
+
+	<sql id="All_Column">
+		task_id, bean_name, method_name, params, cron_expression, STATUS, remark, create_dt
+	</sql>
+
+	<select id="queryObject" resultType="com.ml.entity.sys.Schedule" >
+		SELECT <include refid="All_Column"/> FROM schedule_task WHERE task_id = #{value}
+	</select> 
+
+	<select id="queryList" resultType="com.ml.entity.sys.Schedule" >
+		SELECT <include refid="All_Column"/>  FROM schedule_task
+		<where>
+			<if test="beanName != null and beanName.trim() != ''">
+				bean_name LIKE concat('%', #{beanName}, '%') 
+			</if>
+		</where>
+		<if test="offset != null and limit != null ">
+		limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="queryTotal" resultType="int">
+		SELECT COUNT(1) FROM schedule_task 
+		<where>
+			<if test="beanName != null and beanName.trim() != ''">
+				bean_name like concat('%', #{beanName}, '%') 
+			</if>
+		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.ml.entity.sys.Schedule" useGeneratedKeys="true" keyProperty="taskId">
+		INSERT INTO schedule_task
+		(
+			`bean_name`, 
+			`method_name`, 
+			`params`, 
+			`cron_expression`, 
+			`status`, 
+			`remark`, 
+			`create_dt`
+		)
+		VALUES
+		(
+			#{beanName}, 
+			#{methodName}, 
+			#{params}, 
+			#{cronExpression}, 
+			#{status}, 
+			#{remark}, 
+			#{createDt}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.ml.entity.sys.Schedule">
+		UPDATE schedule_task
+		<set> 
+			<if test="beanName != null">`bean_name` = #{beanName}, </if>
+			<if test="methodName != null">`method_name` = #{methodName}, </if>
+			<if test="params != null">`params` = #{params}, </if>
+			<if test="cronExpression != null">`cron_expression` = #{cronExpression}, </if>
+			<if test="status != null">`status` = #{status}, </if>
+			<if test="remark != null">`remark` = #{remark}, </if>
+		</set>
+		WHERE task_id = #{taskId}
+	</update>
+	
+	<!-- 批量更新状态 -->
+	<update id="updateBatch"> 
+		UPDATE schedule_task SET status = #{status} WHERE task_id in
+		<foreach item="taskId" collection="list"  open="(" separator="," close=")">
+			#{taskId}
+		</foreach>
+	</update>
+	
+	<delete id="deleteBatch">
+		delete from schedule_task where task_id in 
+		<foreach item="taskId" collection="array" open="(" separator="," close=")">
+			#{taskId}
+		</foreach>
+	</delete>
+
+
+
+	<select id="queryObject" resultType="com.ml.entity.sys.ScheduleLog" >
+		SELECT * from schedule_task_log WHERE log_id = #{value}
+	</select>
+
+	<select id="queryList" resultType="com.ml.entity.sys.ScheduleLog" >
+		SELECT * FROM schedule_task_log
+		<where>
+			<if test="taskId != null">
+				AND task_id = #{taskId}
+			</if>
+		</where>
+		order by log_id desc
+		<if test="offset != null and limit != null ">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+
+	<select id="queryTotal" resultType="int">
+		select count(1) from schedule_task_log
+		<where>
+			<if test="taskId != null">
+				and task_id = #{taskId}
+			</if>
+		</where>
+	</select>
+
+	<insert id="saveLog" parameterType="com.ml.entity.sys.ScheduleLog">
+		INSERT INTO schedule_task_log
+		(
+		`task_id`,
+		`bean_name`,
+		`method_name`,
+		`params`,
+		`status`,
+		`error`,
+		`times`,
+		`create_dt`
+		)
+		VALUES
+		(
+		#{taskId},
+		#{beanName},
+		#{methodName},
+		#{params},
+		#{status},
+		#{error},
+		#{times},
+		#{createDt}
+		)
+	</insert>
+</mapper>

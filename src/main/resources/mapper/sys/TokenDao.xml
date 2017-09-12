@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ml.mapper.sys.TokenDao">
+
+	<sql id="All_Column">
+		user_id, username, password, email, mobile, status, creator, create_dt
+	</sql>
+
+	<select id="queryByUserId" resultType="com.ml.entity.sys.Token">
+		select * from api_token where user_id = #{value}
+	</select>
+
+	<select id="queryByToken" resultType="com.ml.entity.sys.Token">
+		select * from api_token where token = #{value}
+	</select>
+	 
+	<insert id="save" parameterType="com.ml.entity.sys.Token">
+		insert into api_token
+		(
+			`user_id`, 
+			`token`, 
+			`expire_time`, 
+			`update_time`
+		)
+		values
+		(
+			#{userId}, 
+			#{token}, 
+			#{expireTime}, 
+			#{updateTime}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.ml.entity.sys.Token">
+		update api_token 
+		<set>
+			<if test="token != null">`token` = #{token}, </if>
+			<if test="expireTime != null">`expire_time` = #{expireTime}, </if>
+			<if test="updateTime != null">`update_time` = #{updateTime}</if>
+		</set>
+		where user_id = #{userId}
+	</update>
+
+</mapper>

@@ -55,8 +55,8 @@ CREATE TABLE `sys_role_menu` (
 -- 系统配置信息
 CREATE TABLE `sys_config` (
 	`id` bigint NOT NULL AUTO_INCREMENT,
-	`key` varchar(50) COMMENT 'key',
-	`value` varchar(2000) COMMENT 'value',
+	`config_key` varchar(50) COMMENT 'key',
+	`config_value` varchar(2000) COMMENT 'value',
 	`status` tinyint DEFAULT 1 COMMENT '状态   0：隐藏   1：显示',
 	`remark` varchar(500) COMMENT '备注',
 	PRIMARY KEY (`id`),
@@ -74,3 +74,9 @@ CREATE TABLE `sys_log` (
   `create_dt` datetime COMMENT '创建时间',
   PRIMARY KEY (`id`)
 ) ENGINE=`InnoDB` DEFAULT CHARACTER SET utf8 COMMENT='系统日志';
+
+
+
+
+
+

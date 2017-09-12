@@ -20,7 +20,7 @@ import java.util.concurrent.Future;
 /**
  * 定时任务
  *
- * @author Panda.HuangWei313.
+ * @author panda.
  * @since 2017-09-08 15:24.
  */
 public class ScheduleTask extends QuartzJobBean {
