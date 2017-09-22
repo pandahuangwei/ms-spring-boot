@@ -18,8 +18,8 @@ import javax.servlet.annotation.WebServlet;
                 @WebInitParam(name = "allow", value = "127.0.0.1,192.168.1.1"),
                 @WebInitParam(name = "deny", value = "192.168.1.73"),
                 //添加用户名密码的话，则查看druid监控需要登录
-                // @WebInitParam(name = "loginUsername", value = "admin"),
-                // @WebInitParam(name = "loginPassword", value = "123456"),
+                // @WebInitParam(name = "loginUsername", getKey = "admin"),
+                // @WebInitParam(name = "loginPassword", getKey = "123456"),
                 @WebInitParam(name = "resetEnable", value = "false")
         })
 public class DruidStartViewServlet extends StatViewServlet {

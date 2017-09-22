@@ -20,7 +20,7 @@ public class SqlFilter {
      *
      * @param str 待验证的字符串
      */
-    public static String sqlInject(String str) {
+    public static String filter(String str) {
         if (StringUtils.isBlank(str)) {
             return null;
         }

@@ -1,6 +1,6 @@
 package com.ml.entity;
 
-import com.ml.enums.SimpleResEnum;
+import com.ml.enums.SysEnums.SimpleResEnum;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,8 +13,9 @@ import java.util.Map;
  */
 public class R extends HashMap<String, Object> {
     private static final long serialVersionUID = 1L;
-    private static String CODE = "code";
-    private static String MESSAGE = "msg";
+    private static final String CODE = "code";
+    private static final String MESSAGE = "msg";
+    private static final String PAGE = "page";
 
     public R() {
         put(CODE, 0);
@@ -27,7 +28,7 @@ public class R extends HashMap<String, Object> {
      * @return e
      */
     public static R fail(String msg) {
-        return r(SimpleResEnum.Fail.value(), msg);
+        return r(SimpleResEnum.Fail.getKey(), msg);
     }
 
     /**
@@ -47,7 +48,7 @@ public class R extends HashMap<String, Object> {
      * @return 带成功状态的返回
      */
     public static R success() {
-        return r(SimpleResEnum.Success.value(), null);
+        return r(SimpleResEnum.Success.getKey(), null);
     }
 
     /**
@@ -57,7 +58,7 @@ public class R extends HashMap<String, Object> {
      * @return e
      */
     public static R success(String msg) {
-        return r(SimpleResEnum.Success.value(), msg);
+        return r(SimpleResEnum.Success.getKey(), msg);
     }
 
     /**
@@ -68,7 +69,7 @@ public class R extends HashMap<String, Object> {
      * @return e
      */
     public static R success(String msg, Map<String, Object> map) {
-        R r = r(SimpleResEnum.Success.value(), msg);
+        R r = r(SimpleResEnum.Success.getKey(), msg);
         r.putAll(map);
         return r;
     }
@@ -80,4 +81,13 @@ public class R extends HashMap<String, Object> {
         return r;
     }
 
+    public R put(String key, Object value) {
+        super.put(key, value);
+        return this;
+    }
+
+    public R putPage(Object value) {
+        super.put(PAGE, value);
+        return this;
+    }
 }
