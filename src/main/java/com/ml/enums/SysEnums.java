@@ -51,6 +51,10 @@ public interface SysEnums {
         public String getValue() {
             return value;
         }
+
+        public boolean eq(int itemKey) {
+            return this.key == itemKey;
+        }
     }
 
     /**
@@ -74,6 +78,10 @@ public interface SysEnums {
 
         public String getValue() {
             return value;
+        }
+
+        public boolean eq(int itemKey) {
+            return this.key == itemKey;
         }
     }
 

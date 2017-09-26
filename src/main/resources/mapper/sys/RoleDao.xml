@@ -3,11 +3,11 @@
 
 <mapper namespace="com.ml.mapper.sys.RoleDao">
 
-	<select id="queryObject" resultType="io.renren.entity.SysRoleEntity">
+	<select id="get" resultType="com.ml.entity.sys.Role">
 		select * from sys_role where role_id = #{value}
 	</select>
 	
-	<select id="queryList" resultType="io.renren.entity.SysRoleEntity">
+	<select id="findList" resultType="com.ml.entity.sys.Role">
 		select * from sys_role 
 		<where>
 			<if test="roleName != null and roleName.trim() != ''">
@@ -42,7 +42,7 @@
 		</where>
 	</select>
 	
-	<insert id="save" parameterType="io.renren.entity.SysRoleEntity" useGeneratedKeys="true" keyProperty="roleId">
+	<insert id="save" parameterType="com.ml.entity.sys.Role" useGeneratedKeys="true" keyProperty="roleId">
 		insert into sys_role
 		(
 			`role_id`, 
@@ -61,7 +61,7 @@
 		)
 	</insert>
 	 
-	<update id="update" parameterType="io.renren.entity.SysRoleEntity">
+	<update id="update" parameterType="com.ml.entity.sys.Role">
 		update sys_role 
 		<set> 
 			<if test="roleName != null">`role_name` = #{roleName}, </if>
@@ -88,12 +88,12 @@
 	</delete>
 	
 	<!-- 查询用户创建的角色ID列表 -->
-	<select id="queryRoleIdList" resultType="long">
-		select role_id from sys_role where create_user_id = #{createUserId} 
+	<select id="findMenuIdList" resultType="long">
+		select role_id from sys_role where create_user_id = #{creator}
 	</select>
 
 
-	<insert id="save">
+	<insert id="saveRoleMenu">
 		insert into sys_role_menu
 		(
 		`role_id`,
@@ -108,7 +108,7 @@
 		</foreach>
 	</insert>
 
-	<delete id="delete">
+	<delete id="deleteRoleMenu">
 		delete from sys_role_menu where role_id = #{value}
 	</delete>
 

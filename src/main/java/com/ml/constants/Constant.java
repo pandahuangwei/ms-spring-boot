@@ -1,4 +1,4 @@
-package com.ml.Constants;
+package com.ml.constants;
 
 /**
  * 系统常量.

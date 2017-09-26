@@ -22,8 +22,9 @@ public class BaseEntity implements Serializable {
     private Date createDt;
     private Long modifier;
     private Date modifyDt;
-    private int activeFlag;
+    private int delFlag;
     private String lang;
+    private String remark;
 
     @Transient
     private Integer page = 1;
@@ -71,12 +72,12 @@ public class BaseEntity implements Serializable {
         this.modifyDt = modifyDt;
     }
 
-    public int getActiveFlag() {
-        return activeFlag;
+    public int getDelFlag() {
+        return delFlag;
     }
 
-    public void setActiveFlag(int activeFlag) {
-        this.activeFlag = activeFlag;
+    public void setDelFlag(int delFlag) {
+        this.delFlag = delFlag;
     }
 
     public String getLang() {
@@ -85,6 +86,14 @@ public class BaseEntity implements Serializable {
 
     public void setLang(String lang) {
         this.lang = lang;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 
     public Integer getPage() {

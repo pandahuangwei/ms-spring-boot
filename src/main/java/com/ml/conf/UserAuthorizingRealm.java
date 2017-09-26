@@ -22,7 +22,8 @@ import java.util.Set;
 public class UserAuthorizingRealm extends AuthorizingRealm {
     @Autowired
     private UserService userService;
-
+    @Autowired
+    private MenuService menuService;
     /**
      * 授权(验证权限时调用)
      */
@@ -32,7 +33,7 @@ public class UserAuthorizingRealm extends AuthorizingRealm {
         Long userId = user.getId();
 
         //用户权限列表
-        Set<String> permsSet = userService.findUserPermissions(userId);
+        Set<String> permsSet = menuService.findUserPermissions(userId);
 
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
         info.setStringPermissions(permsSet);
@@ -49,7 +50,7 @@ public class UserAuthorizingRealm extends AuthorizingRealm {
         String password = new String((char[]) token.getCredentials());
 
         //查询用户信息
-        User user = userService.getUserByUsername(username);
+        User user = userService.getByUsername(username);
 
         //账号不存在
         if (user == null) {

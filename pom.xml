@@ -260,6 +260,7 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${spring-boot.version}</version>
             </plugin>
 
             <!--For: package skip Test . eq：mvn install -Dmaven.test.skip=true-->

@@ -7,11 +7,11 @@
 		task_id, bean_name, method_name, params, cron_expression, STATUS, remark, create_dt
 	</sql>
 
-	<select id="queryObject" resultType="com.ml.entity.sys.Schedule" >
+	<select id="get" resultType="com.ml.entity.sys.Schedule" >
 		SELECT <include refid="All_Column"/> FROM schedule_task WHERE task_id = #{value}
 	</select> 
 
-	<select id="queryList" resultType="com.ml.entity.sys.Schedule" >
+	<select id="findList" resultType="com.ml.entity.sys.Schedule" >
 		SELECT <include refid="All_Column"/>  FROM schedule_task
 		<where>
 			<if test="beanName != null and beanName.trim() != ''">
@@ -23,14 +23,14 @@
 		</if>
 	</select>
 	
- 	<select id="queryTotal" resultType="int">
+<!-- 	<select id="queryTotal" resultType="int">
 		SELECT COUNT(1) FROM schedule_task 
 		<where>
 			<if test="beanName != null and beanName.trim() != ''">
 				bean_name like concat('%', #{beanName}, '%') 
 			</if>
 		</where>
-	</select>
+	</select>-->
 	 
 	<insert id="save" parameterType="com.ml.entity.sys.Schedule" useGeneratedKeys="true" keyProperty="taskId">
 		INSERT INTO schedule_task
@@ -83,13 +83,12 @@
 		</foreach>
 	</delete>
 
-
-
-	<select id="queryObject" resultType="com.ml.entity.sys.ScheduleLog" >
+	<!--定时任务日志-->
+	<select id="getScheduleLog" resultType="com.ml.entity.sys.ScheduleLog" >
 		SELECT * from schedule_task_log WHERE log_id = #{value}
 	</select>
 
-	<select id="queryList" resultType="com.ml.entity.sys.ScheduleLog" >
+	<select id="findLogList" resultType="com.ml.entity.sys.ScheduleLog" >
 		SELECT * FROM schedule_task_log
 		<where>
 			<if test="taskId != null">
@@ -102,14 +101,14 @@
 		</if>
 	</select>
 
-	<select id="queryTotal" resultType="int">
+<!--	<select id="queryTotal" resultType="int">
 		select count(1) from schedule_task_log
 		<where>
 			<if test="taskId != null">
 				and task_id = #{taskId}
 			</if>
 		</where>
-	</select>
+	</select>-->
 
 	<insert id="saveLog" parameterType="com.ml.entity.sys.ScheduleLog">
 		INSERT INTO schedule_task_log

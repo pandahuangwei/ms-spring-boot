@@ -3,11 +3,11 @@
 
 <mapper namespace="com.ml.mapper.sys.LogDao">
 
-	<select id="queryObject" resultType="io.renren.entity.SysLogEntity">
+	<select id="queryObject" resultType="com.ml.entity.sys.Log">
 		select * from sys_log where id = #{value}
 	</select>
 
-	<select id="queryList" resultType="io.renren.entity.SysLogEntity">
+	<select id="queryList" resultType="com.ml.entity.sys.Log">
 		select * from sys_log 
 		<where>
 			<if test="key != null and key.trim() != ''">
@@ -29,7 +29,7 @@
 		</where>
 	</select>
 	 
-	<insert id="save" parameterType="io.renren.entity.SysLogEntity" useGeneratedKeys="true" keyProperty="id">
+	<insert id="save" parameterType="com.ml.entity.sys.Log" useGeneratedKeys="true" keyProperty="id">
 		insert into sys_log
 		(
 			`username`, 
@@ -50,7 +50,7 @@
 		)
 	</insert>
 	 
-	<update id="update" parameterType="io.renren.entity.SysLogEntity">
+	<update id="update" parameterType="com.ml.entity.sys.Log">
 		update sys_log 
 		<set>
 			<if test="username != null">`username` = #{username}, </if>
