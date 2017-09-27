@@ -11,7 +11,7 @@ public interface SysEnums {
      * 返回结果的状态.
      */
     enum SimpleResEnum {
-        Success(2001, "成功"), Fail(5001, "失败");
+        Success(1, "成功"), Fail(0, "失败");
 
         private int key;
         private String value;

@@ -52,7 +52,7 @@ public class UserService {
         //sha256加密
         newPassword = new Md5Hash(user.getUsername()+newPassword).toHex();
         Map<String, Object> map = new HashMap<>();
-        map.put("userId", user.getId());
+        map.put("userId", user.getUserId());
         map.put("password", password);
         map.put("newPassword", newPassword);
         return userDao.updatePassword(map);
@@ -71,7 +71,7 @@ public class UserService {
         user.setPassword(new Md5Hash(user.getUsername()+user.getPassword()).toHex());
         userDao.save(user);
         checkRole(user);
-        saveOrUpdateUserRole(user.getId(), user.getRoleIdList());
+        saveOrUpdateUserRole(user.getUserId(), user.getRoleIdList());
     }
 
     @Transactional
@@ -83,7 +83,7 @@ public class UserService {
         }
         userDao.update(user);
         checkRole(user);
-        saveOrUpdateUserRole(user.getId(), user.getRoleIdList());
+        saveOrUpdateUserRole(user.getUserId(), user.getRoleIdList());
     }
 
     @Transactional

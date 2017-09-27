@@ -107,7 +107,7 @@ public class Generators {
         map.put("package", config.getString("package"));
         map.put("author", config.getString("author"));
         map.put("email", config.getString("email"));
-        map.put("datetime", DateUtils.formatDateTime(new Date()));
+        map.put("datetime", Dates.formatDateTime(new Date()));
         VelocityContext context = new VelocityContext(map);
 
         //获取模板列表

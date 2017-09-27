@@ -2,6 +2,8 @@ package com.ml.web.sys;
 
 import com.google.code.kaptcha.Constants;
 import com.google.code.kaptcha.Producer;
+import com.ml.cache.KaptchaCache;
+import com.ml.constants.Constant;
 import com.ml.entity.R;
 import com.ml.utils.Shiros;
 import org.apache.shiro.authc.*;
@@ -17,9 +19,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.UUID;
 
 /**
  * @author panda.
@@ -37,10 +42,13 @@ public class LoginController {
 
         //生成文字验证码
         String text = producer.createText();
+        String uuid = UUID.randomUUID().toString();
+        KaptchaCache.getInstance().add(uuid,text);
+        Cookie cookie = new Cookie(Constants.KAPTCHA_SESSION_KEY,uuid);
+        response.addCookie(cookie);
+
         //生成图片验证码
         BufferedImage image = producer.createImage(text);
-        //保存到shiro session
-        Shiros.setSessionAttribute(Constants.KAPTCHA_SESSION_KEY, text);
 
         ServletOutputStream out = response.getOutputStream();
         ImageIO.write(image, "jpg", out);
@@ -52,15 +60,14 @@ public class LoginController {
      */
     @ResponseBody
     @RequestMapping(value = "/sys/login", method = RequestMethod.POST)
-    public R login(String username, String password, String captcha) throws IOException {
-        String kaptcha = Shiros.getKaptcha(Constants.KAPTCHA_SESSION_KEY);
+    public R login(HttpServletRequest request,String username, String password, String captcha) throws IOException {
+        String kaptcha = getKaptcha(request);
         if (!captcha.equalsIgnoreCase(kaptcha)) {
             return R.fail("验证码不正确");
         }
 
         try {
             Subject subject = Shiros.getSubject();
-            //sha256加密
             password = new Md5Hash(username+password).toHex();
             UsernamePasswordToken token = new UsernamePasswordToken(username, password);
             subject.login(token);
@@ -86,4 +93,20 @@ public class LoginController {
         return "redirect:login.html";
     }
 
+    /**
+     * 从cookie中获取对应的uuid，然后获取缓存的验证码.
+     * @param request req
+     * @return 验证码
+     */
+    private String getKaptcha(HttpServletRequest request) {
+        Cookie[] cookies = request.getCookies();
+        String uuid = null;
+        for (Cookie c : cookies) {
+            if (Constants.KAPTCHA_SESSION_KEY.equals(c.getName())) {
+                uuid = c.getValue();
+                break;
+            }
+        }
+        return KaptchaCache.getInstance().getValue(uuid);
+    }
 }

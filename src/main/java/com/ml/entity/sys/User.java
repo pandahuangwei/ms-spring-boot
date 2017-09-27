@@ -11,12 +11,21 @@ import java.util.List;
 public class User extends BaseEntity {
     private static final Long serialVersionUID = 1L;
 
+    private Long userId;
     private String username;
     private transient String password;
     private int status;
     private String email;
     private String mobile;
     private List<Long> roleIdList;
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
 
     public String getUsername() {
         return username;

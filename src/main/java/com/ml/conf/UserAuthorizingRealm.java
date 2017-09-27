@@ -30,7 +30,7 @@ public class UserAuthorizingRealm extends AuthorizingRealm {
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         User user = (User) principals.getPrimaryPrincipal();
-        Long userId = user.getId();
+        Long userId = user.getUserId();
 
         //用户权限列表
         Set<String> permsSet = menuService.findUserPermissions(userId);

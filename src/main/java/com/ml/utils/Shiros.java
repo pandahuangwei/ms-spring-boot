@@ -26,12 +26,9 @@ public class Shiros {
     }
 
     public static Long getUserId() {
-        return getUser().getId();
+        return getUser().getUserId();
     }
 
-    public static void setSessionAttribute(Object key, Object value) {
-        getSession().setAttribute(key, value);
-    }
 
     public static Object getSessionAttribute(Object key) {
         return getSession().getAttribute(key);
@@ -43,14 +40,5 @@ public class Shiros {
 
     public static void logout() {
         SecurityUtils.getSubject().logout();
-    }
-
-    public static String getKaptcha(String key) {
-        Object kaptcha = getSessionAttribute(key);
-        if (kaptcha == null) {
-            throw new RtException("验证码已失效");
-        }
-        getSession().removeAttribute(key);
-        return kaptcha.toString();
     }
 }
