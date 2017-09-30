@@ -75,6 +75,14 @@ CREATE TABLE `sys_log` (
   PRIMARY KEY (`id`)
 ) ENGINE=`InnoDB` DEFAULT CHARACTER SET utf8 COMMENT='系统日志';
 
+-- 文件上传
+CREATE TABLE `sys_oss` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `url` varchar(200) COMMENT 'URL地址',
+  `create_dt` datetime COMMENT '创建时间',
+  PRIMARY KEY (`id`)
+) ENGINE=`InnoDB` DEFAULT CHARACTER SET utf8 COMMENT='文件上传';
+
 ------API
 -- 用户表
 CREATE TABLE `api_user` (
