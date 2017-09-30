@@ -34,8 +34,7 @@ public class MenuController {
     @RequestMapping("/list")
     @RequiresPermissions("sys:menu:list")
     public R list(@RequestParam Map<String, Object> params){
-
-        return R.success().put("page", "");
+        return R.success().putPage(menuService.findPage(params));
     }
 
     /**

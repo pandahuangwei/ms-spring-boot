@@ -6,7 +6,7 @@ package com.ml.exception;
  */
 public class RtException extends RuntimeException {
 
-    private int code = 5001;
+    private int code = 0;
     private String msg;
 
     public RtException(String msg) {

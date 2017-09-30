@@ -18,20 +18,8 @@
 				bean_name LIKE concat('%', #{beanName}, '%') 
 			</if>
 		</where>
-		<if test="offset != null and limit != null ">
-		limit #{offset}, #{limit}
-		</if>
 	</select>
-	
-<!-- 	<select id="queryTotal" resultType="int">
-		SELECT COUNT(1) FROM schedule_task 
-		<where>
-			<if test="beanName != null and beanName.trim() != ''">
-				bean_name like concat('%', #{beanName}, '%') 
-			</if>
-		</where>
-	</select>-->
-	 
+
 	<insert id="save" parameterType="com.ml.entity.sys.Schedule" useGeneratedKeys="true" keyProperty="taskId">
 		INSERT INTO schedule_task
 		(

@@ -7,11 +7,11 @@
 		user_id, username, password, email, mobile, status, creator, create_dt
 	</sql>
 
-	<select id="queryByUserId" resultType="com.ml.entity.sys.Token">
+	<select id="getByUserId" resultType="com.ml.entity.sys.Token">
 		select * from api_token where user_id = #{value}
 	</select>
 
-	<select id="queryByToken" resultType="com.ml.entity.sys.Token">
+	<select id="getByToken" resultType="com.ml.entity.sys.Token">
 		select * from api_token where token = #{value}
 	</select>
 	 

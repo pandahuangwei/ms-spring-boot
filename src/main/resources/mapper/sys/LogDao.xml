@@ -3,11 +3,11 @@
 
 <mapper namespace="com.ml.mapper.sys.LogDao">
 
-	<select id="queryObject" resultType="com.ml.entity.sys.Log">
+	<select id="get" resultType="com.ml.entity.sys.Log">
 		select * from sys_log where id = #{value}
 	</select>
 
-	<select id="queryList" resultType="com.ml.entity.sys.Log">
+	<select id="findList" resultType="com.ml.entity.sys.Log">
 		select * from sys_log 
 		<where>
 			<if test="key != null and key.trim() != ''">
@@ -19,15 +19,7 @@
 			limit #{offset}, #{limit}
 		</if>
 	</select>
-	
- 	<select id="queryTotal" resultType="int">
-		select count(*) from sys_log 
-		<where>
-			<if test="key != null and key.trim() != ''">
-				`username` like concat('%',#{key},'%') or `operation` like concat('%',#{key},'%')
-			</if>
-		</where>
-	</select>
+
 	 
 	<insert id="save" parameterType="com.ml.entity.sys.Log" useGeneratedKeys="true" keyProperty="id">
 		insert into sys_log
@@ -37,7 +29,7 @@
 			`method`, 
 			`params`, 
 			`ip`, 
-			`create_date`
+			`create_dt`
 		)
 		values
 		(
@@ -46,31 +38,8 @@
 			#{method}, 
 			#{params}, 
 			#{ip}, 
-			#{createDate}
+			#{createDt}
 		)
 	</insert>
-	 
-	<update id="update" parameterType="com.ml.entity.sys.Log">
-		update sys_log 
-		<set>
-			<if test="username != null">`username` = #{username}, </if>
-			<if test="operation != null">`operation` = #{operation}, </if>
-			<if test="method != null">`method` = #{method}, </if>
-			<if test="params != null">`params` = #{params}, </if>
-			<if test="ip != null">`ip` = #{ip} </if>
-		</set>
-		where id = #{id}
-	</update>
-	
-	<delete id="delete">
-		delete from sys_log where id = #{value}
-	</delete>
-	
-	<delete id="deleteBatch">
-		delete from sys_log where id in 
-		<foreach item="id" collection="array" open="(" separator="," close=")">
-			#{id}
-		</foreach>
-	</delete>
 
 </mapper>

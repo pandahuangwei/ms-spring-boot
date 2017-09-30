@@ -2,6 +2,7 @@ package com.ml.service.sys;
 
 import com.ml.entity.Page;
 import com.ml.entity.Query;
+import com.ml.entity.sys.Log;
 import com.ml.mapper.sys.LogDao;
 import com.ml.utils.Pages;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,4 +23,9 @@ public class LogService {
         Query query = new Query(params);
         return Pages.findPage(logDao.findList(query),query);
     }
+
+    public void save(Log log){
+        logDao.save(log);
+    }
+
 }

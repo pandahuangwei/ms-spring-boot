@@ -1,49 +1,43 @@
 package com.ml.entity.sys;
 
+import com.ml.entity.BaseEntity;
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
  * @author panda.
  * @since 2017-09-12 16:23.
  */
-public class Config {
+public class Config extends BaseEntity {
+    private static final long serialVersionUID = 1L;
 
-    private Long id;
+    private Long configId;
     @NotBlank(message = "参数名不能为空")
-    private String key;
+    private String configKey;
     @NotBlank(message = "参数值不能为空")
-    private String value;
-    private String remark;
+    private String configValue;
 
-    public Long getId() {
-        return id;
+    public Long getConfigId() {
+        return configId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setConfigId(Long configId) {
+        this.configId = configId;
     }
 
-    public String getKey() {
-        return key;
+    public String getConfigKey() {
+        return configKey;
     }
 
-    public void setKey(String key) {
-        this.key = key;
+    public void setConfigKey(String configKey) {
+        this.configKey = configKey;
     }
 
-    public String getValue() {
-        return value;
+    public String getConfigValue() {
+        return configValue;
     }
 
-    public void setValue(String value) {
-        this.value = value;
+    public void setConfigValue(String configValue) {
+        this.configValue = configValue;
     }
 
-    public String getRemark() {
-        return remark;
-    }
-
-    public void setRemark(String remark) {
-        this.remark = remark;
-    }
 }

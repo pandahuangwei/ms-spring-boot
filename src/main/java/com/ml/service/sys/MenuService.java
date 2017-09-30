@@ -1,8 +1,11 @@
 package com.ml.service.sys;
 
+import com.ml.entity.Page;
+import com.ml.entity.Query;
 import com.ml.entity.sys.Menu;
 import com.ml.enums.SysEnums.MenuType;
 import com.ml.mapper.sys.MenuDao;
+import com.ml.utils.Pages;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,6 +24,11 @@ public class MenuService {
     private MenuDao menuDao;
     @Autowired
     private UserService userService;
+
+    public Page findPage(Map<String, Object> map) {
+        Query query = new Query(map);
+        return Pages.findPage(menuDao.findList(query),query);
+    }
 
     public List<Menu> findNotButtonList() {
         List<Menu> menuList = menuDao.findNotButtonList();

@@ -20,7 +20,8 @@ public class Pages {
         if (query != null) {
             PageHelper.startPage(query.getPageNum(), query.getPageSize());
         }
-        return newPage(new PageInfo<>(mapperSearch));
+        PageInfo<?> info = new PageInfo<>(mapperSearch);
+        return newPage(info);
     }
 
     /**

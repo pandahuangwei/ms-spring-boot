@@ -85,4 +85,32 @@ public interface SysEnums {
         }
     }
 
+    enum CloudTypeEnum {
+        /**
+         * 七牛云
+         */
+        QINIU(1),
+        /**
+         * 阿里云
+         */
+        ALIYUN(2),
+        /**
+         * 腾讯云
+         */
+        QCLOUD(3);
+
+        private int value;
+
+        CloudTypeEnum(int value) {
+            this.value = value;
+        }
+
+        public int getValue() {
+            return value;
+        }
+
+        public boolean eq(int value) {
+            return this.value == value;
+        }
+    }
 }

@@ -3,7 +3,7 @@
 
 <mapper namespace="com.ml.mapper.sys.MenuDao">
 
-	<select id="queryObject" resultType="com.ml.entity.sys.Menu">
+	<select id="get" resultType="com.ml.entity.sys.Menu">
 		select * from sys_menu where menu_id = #{value}
 	</select>
 	
@@ -51,9 +51,6 @@
 				order by m.order_num asc
 			</otherwise>
 		</choose>
-		<if test="offset != null and limit != null">
-			limit #{offset}, #{limit}
-		</if>
 	</select>
 	
 	<!-- 查询用户的权限列表 --> 
@@ -64,11 +61,7 @@
 			LEFT JOIN sys_menu m on rm.menu_id = m.menu_id 
 		where ur.user_id = #{userId} order by m.order_num asc
 	</select>
-	
-	<select id="queryTotal" resultType="int">
-		select count(*) from sys_menu
-	</select>
-	 
+
 	<update id="update" parameterType="com.ml.entity.sys.Menu">
 		update sys_menu 
 		<set> 

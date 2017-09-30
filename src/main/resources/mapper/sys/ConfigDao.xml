@@ -4,55 +4,45 @@
 <mapper namespace="com.ml.mapper.sys.ConfigDao">
 
 	<sql id="All_Column">
-		id, config_key key, config_value value, status, remark
+		config_id, config_key , config_value , status, remark
 	</sql>
 
-	<select id="queryObject" resultType="com.ml.entity.sys.Config">
-		SELECT <include refid="All_Column"/> FROM sys_config WHERE id = #{id}
+	<select id="get" resultType="com.ml.entity.sys.Config">
+		SELECT <include refid="All_Column"/> FROM sys_config WHERE config_id = #{id}
 	</select>
 	
-	<select id="queryList" parameterType="map" resultType="com.ml.entity.sys.Config">
+	<select id="findList" resultType="com.ml.entity.sys.Config">
 		SELECT <include refid="All_Column"/> FROM sys_config WHERE status = 1
 		<if test="key != null and key.trim() != ''">
-			and config_key like concat('%',#{key},'%')
-		</if>
-		<if test="offset != null and limit != null">
-			limit #{offset}, #{limit}
+			and config_key like concat('%',#{configKey},'%')
 		</if>
 	</select>
-	
-	<select id="queryTotal" parameterType="map" resultType="int">
-		SELECT COUNT(*) FROM sys_config WHERE status = 1
-		<if test="key != null and key.trim() != ''">
-			and `key` like concat('%',#{key},'%')
-		</if>
-	</select>
-	
+
 	<insert id="save" parameterType="com.ml.entity.sys.Config">
 		INSERT INTO sys_config(config_key, config_value, remark)
-			 VALUES(#{key},#{value},#{remark})
+			 VALUES(#{configKey},#{configValue},#{remark})
 	</insert>
 	
 	<update id="update" parameterType="com.ml.entity.sys.Config">
 		UPDATE sys_config
-		   SET config_key = #{key},
-		       config_value = #{value},
+		   SET config_key = #{configKey},
+		       config_value = #{configValue},
 		       remark = #{remark}
-	    WHERE id = #{id}
+	    WHERE config_id = #{configId}
 	</update>
 	
 	<!-- 根据key，更新value -->
 	<update id="updateValueByKey" parameterType="map">
-		UPDATE sys_config SET config_value = #{value} WHERE config_key = #{key}
+		UPDATE sys_config SET config_value = #{value} WHERE config_key = #{configKey}
 	</update>
 	
 	<!-- 根据key，查询value -->
-	<select id="queryByKey" parameterType="string" resultType="string">
-		SELECT config_value FROM sys_config WHERE config_key = #{key}
+	<select id="getByKey" parameterType="string" resultType="string">
+		SELECT config_value FROM sys_config WHERE config_key = #{configKey}
 	</select>
 	
 	<delete id="deleteBatch" parameterType="int">
-		DELETE FROM sys_config WHERE id in
+		DELETE FROM sys_config WHERE config_id in
 		<foreach item="id" collection="array" open="(" separator="," close=")">
 			#{id}
 		</foreach>

@@ -29,6 +29,9 @@ public class Query extends HashMap<String, Object> {
         //分页参数
         this.pageNum = Integer.parseInt(params.get(PAGE_NUM).toString());
         this.pageSize = Integer.parseInt(params.get(PAGE_SIZE).toString());
+        this.put("page", pageNum);
+        this.put("rows", pageSize);
+
         String sidx = params.get(SIDX).toString();
         String order = params.get(ORDER).toString();
         this.put(SIDX, SqlFilter.filter(sidx));

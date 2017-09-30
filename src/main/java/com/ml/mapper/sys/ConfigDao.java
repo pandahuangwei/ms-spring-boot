@@ -10,4 +10,6 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface ConfigDao extends BaseDao<Config> {
+    String getByKey(String key);
+    void updateValueByKey(String key, String value);
 }

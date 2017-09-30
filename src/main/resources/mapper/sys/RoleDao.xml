@@ -13,8 +13,8 @@
 			<if test="roleName != null and roleName.trim() != ''">
 				and `role_name` like concat('%',#{roleName},'%') 
 			</if>
-			<if test="createUserId != null">
-				and create_user_id = #{createUserId} 
+			<if test="creator != null">
+				and creator = #{creator}
 			</if>
 		</where>
 		<choose>
@@ -25,39 +25,24 @@
 				order by role_id asc
 			</otherwise>
 		</choose>
-		<if test="offset != null and limit != null">
-			limit #{offset}, #{limit}
-		</if>
 	</select>
-	
-	<select id="queryTotal" resultType="int">
-		select count(*) from sys_role 
-		<where>
-			<if test="roleName != null and roleName.trim() != ''">
-				and `role_name` like concat('%',#{roleName},'%') 
-			</if>
-			<if test="createUserId != null">
-				and create_user_id = #{createUserId} 
-			</if>
-		</where>
-	</select>
-	
+
 	<insert id="save" parameterType="com.ml.entity.sys.Role" useGeneratedKeys="true" keyProperty="roleId">
 		insert into sys_role
 		(
 			`role_id`, 
 			`role_name`, 
 			`remark`,
-			`create_user_id`,
-			`create_time`
+			`creator`,
+			`create_dt`
 		)
 		values
 		(
 			#{roleId}, 
 			#{roleName}, 
 			#{remark},
-			#{createUserId},
-			#{createTime}
+			#{creator},
+			#{createDt}
 		)
 	</insert>
 	 
@@ -89,7 +74,7 @@
 	
 	<!-- 查询用户创建的角色ID列表 -->
 	<select id="findMenuIdList" resultType="long">
-		select role_id from sys_role where create_user_id = #{creator}
+		select role_id from sys_role where creator = #{creator}
 	</select>
 
 

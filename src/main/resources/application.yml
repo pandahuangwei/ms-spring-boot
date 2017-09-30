@@ -14,7 +14,7 @@ spring:
     suffix: .html
     mode: LEGACYHTML5
     encoding: UTF-8
-    cache: false
+    #cache: false
 
 mybatis:
     type-aliases-package: com.ml.entity
